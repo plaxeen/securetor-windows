@@ -1,69 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 
-namespace folderKeySecure.work
-{
-    class core
-    {
-        public void request(string password, string vkId)
-        {
-            string[] data = System.IO.File.ReadAllLines(util.pathApp + "base.ini");
+namespace folderKeySecure.work{
+    class core{
+        /// <summary>
+        /// Проверка введенного пароля с теми, что определены в файле
+        /// </summary>
+        /// <param name="database">файл</param>
+        /// <param name="password">пароль</param>
+        /// <returns>успешность сверки</returns>
+        public string Request(string[] database, string password){
+            for (int i = 0; database.Length > i; i++){
+                string folder_temp, password_temp, username_temp;
 
-            bool check = true;
+                byte[] decoding = Convert.FromBase64String(database[i]);
+                string decoded = Encoding.UTF8.GetString(decoding);
 
-            for (int i = 0; data.Length > i; i++)
-            {
-                string folder_temp, password_temp, username_temp, identifyVK_temp;
-
-                byte[] decoding = Convert.FromBase64String(data[i]);
-                data[i] = Encoding.UTF8.GetString(decoding);
-
-                //получение конструкции типа — папка:пароль:имя:id
-                string[] data_array = data[i].Split(':');
+                //получение конструкции типа — папка:пароль:имя
+                string[] data_array = decoded.Split(':');
                 folder_temp = data_array[0];
                 password_temp = data_array[1];
                 username_temp = data_array[2];
-                identifyVK_temp = data_array[3];
 
-                if (password.Contains(password_temp) | vkId.Contains(identifyVK_temp))
-                {
-                    open(folder_temp);
-                    Console.WriteLine(vkId);
+                if (password.Contains(password_temp)){
                     log(null, true, username_temp);
-                    check = false;
+                    return folder_temp + ":" + username_temp;
                 }
             }
-
-            if (vkId != "no_vk")
-            {
-                if (check)
-                {
-                    log(Convert.ToBase64String(Encoding.UTF8.GetBytes(vkId)), false, null);
-                }
-            } else
-            {
-                if (check)
-                {
-                    log(password, false, null);
-                }
-            }
-
-            Application.Exit();
+            log(password, false, null);
+            return null;
         }
 
-        public void open(string address)
-        {
-            string path = util.path + address;
-            if (address.Contains(@"\\"))
-            {
-                path = address;
+        public string open(string[] decoded_database, string entered_password) {
+            string req = Request(decoded_database, entered_password);
+            if (req == null) {
+                return null;
+            } else {
+                string[] data = req.Split(':');
+                string address = data[0];
+                string path = util.path + address;
+                if (address.Contains(@"\\"))
+                {
+                    path = address;
+                }
+                return path+":"+data[1];
             }
-            Process.Start(path);
         }
 
         public void log(string pass, bool audit, string user)

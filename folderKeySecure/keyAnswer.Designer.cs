@@ -29,36 +29,37 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(keyAsker));
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.informer = new System.Windows.Forms.Label();
+            this.buttonAuthOpen = new System.Windows.Forms.Button();
             this.password = new System.Windows.Forms.TextBox();
-            this.vkAuthRequest = new System.Windows.Forms.Button();
+            this.passwordChangerButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label2
+            // informer
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.informer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(181, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Для доступа к папке введите код.\r\n";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.informer.AutoSize = true;
+            this.informer.Location = new System.Drawing.Point(12, 9);
+            this.informer.Name = "informer";
+            this.informer.Size = new System.Drawing.Size(181, 13);
+            this.informer.TabIndex = 3;
+            this.informer.Text = "Для доступа к папке введите код.\r\n";
+            this.informer.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // button1
+            // buttonAuthOpen
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(277, 66);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Открыть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonClick);
+            this.buttonAuthOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAuthOpen.AutoSize = true;
+            this.buttonAuthOpen.FlatAppearance.BorderSize = 0;
+            this.buttonAuthOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAuthOpen.Location = new System.Drawing.Point(274, 66);
+            this.buttonAuthOpen.Name = "buttonAuthOpen";
+            this.buttonAuthOpen.Size = new System.Drawing.Size(78, 23);
+            this.buttonAuthOpen.TabIndex = 1;
+            this.buttonAuthOpen.Text = "Открыть";
+            this.buttonAuthOpen.UseVisualStyleBackColor = true;
+            this.buttonAuthOpen.Click += new System.EventHandler(this.authButton);
             // 
             // password
             // 
@@ -73,31 +74,30 @@
             this.password.Enter += new System.EventHandler(this.password_Enter);
             this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressed);
             // 
-            // vkAuthRequest
+            // passwordChangerButton
             // 
-            this.vkAuthRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.vkAuthRequest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(135)))), ((int)(((byte)(174)))));
-            this.vkAuthRequest.FlatAppearance.BorderSize = 0;
-            this.vkAuthRequest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.vkAuthRequest.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.vkAuthRequest.ForeColor = System.Drawing.Color.White;
-            this.vkAuthRequest.Location = new System.Drawing.Point(196, 66);
-            this.vkAuthRequest.Name = "vkAuthRequest";
-            this.vkAuthRequest.Size = new System.Drawing.Size(75, 23);
-            this.vkAuthRequest.TabIndex = 4;
-            this.vkAuthRequest.Text = "ВКонтакте";
-            this.vkAuthRequest.UseVisualStyleBackColor = false;
-            this.vkAuthRequest.Click += new System.EventHandler(this.vkAuthRequest_Click);
+            this.passwordChangerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwordChangerButton.AutoSize = true;
+            this.passwordChangerButton.Location = new System.Drawing.Point(15, 33);
+            this.passwordChangerButton.Name = "passwordChangerButton";
+            this.passwordChangerButton.Size = new System.Drawing.Size(121, 23);
+            this.passwordChangerButton.TabIndex = 4;
+            this.passwordChangerButton.Text = "Изменить пароль";
+            this.passwordChangerButton.UseVisualStyleBackColor = true;
+            this.passwordChangerButton.Visible = false;
+            this.passwordChangerButton.Click += new System.EventHandler(this.showPasswordChangerDialog);
             // 
             // keyAsker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 101);
-            this.Controls.Add(this.vkAuthRequest);
+            this.Controls.Add(this.passwordChangerButton);
             this.Controls.Add(this.password);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.buttonAuthOpen);
+            this.Controls.Add(this.informer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(380, 140);
@@ -106,16 +106,17 @@
             this.Name = "keyAsker";
             this.Text = "Введите пароль для доступа к папке";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.keyAsker_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label informer;
+        private System.Windows.Forms.Button buttonAuthOpen;
         private System.Windows.Forms.TextBox password;
-        private System.Windows.Forms.Button vkAuthRequest;
+        private System.Windows.Forms.Button passwordChangerButton;
     }
 }
 

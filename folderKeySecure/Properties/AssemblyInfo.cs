@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Игнатов Олег")]
 [assembly: AssemblyProduct("Securetor")]
-[assembly: AssemblyCopyright("Игнатов Олег, ККМТ, группа П3-15")]
+[assembly: AssemblyCopyright("Игнатов О.Э. (П2-15), ККМТ")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.26.0.0")]
-[assembly: AssemblyFileVersion("1.26.0.0")]
+[assembly: AssemblyVersion("1.0.0.27")]
+[assembly: AssemblyFileVersion("1.0.0.27")]
