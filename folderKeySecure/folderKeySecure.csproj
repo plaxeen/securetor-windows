@@ -77,7 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="work\core.cs" />
+    <Compile Include="work\Сore.cs" />
     <Compile Include="keyAnswer.cs">
       <SubType>Form</SubType>
     </Compile>
