@@ -106,15 +106,15 @@ namespace folderKeySecure.work{
 
             string auditInfo;
             if (audit){
-                auditInfo = "! Успешный аудит. \r\nПапка " + user + " открыта в " + date +
-                    " " + clock + " \r\nКомпьютером: \"" + computerName + "\", версия программы: \"" + appVer + "\"\r\n";
+                auditInfo = "\r\n! Успешный аудит. \r\nПапка " + user + " открыта в " + date +
+                    " " + clock + " \r\nКомпьютером: \"" + computerName + "\", версия программы: \"" + appVer + "\"";
             }else{
                 // название учетной записи
                 user = WindowsIdentity.GetCurrent().Name.ToString();
-                auditInfo = "###\r\n! Не успешный аудит. " + date + " " + clock +
+                auditInfo = "\r\n###\r\n! Не успешный аудит. " + date + " " + clock +
                     " Введен пароль: \"" + pass + "\", \r\nс компьютера: \"" + computerName +
                     "\", пользователем: \"" + user + "\" версия программы: \"" + appVer + 
-                    "\", \r\nТокен учетной записи Windows: \"" + token + "\"\r\n";
+                    "\", \r\nТокен учетной записи Windows: \"" + token + "\"";
             }
 
             // запись в файл
