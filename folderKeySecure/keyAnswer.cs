@@ -52,11 +52,12 @@ namespace folderKeySecure{
                 informer.Text = "Ошибка: Пароль неверный. Повторите попытку.";
             } else {
                 try {
-                    Process.Start(data[0]);
-                    informer.Text = "Пароль введен верно. Папка " + data[1] + " открыта.";
                     if (checkBoxToEditDb.Checked) {
-                        new dataBaseEditor(database_text).Show();
+                        new dataBaseEditor(database_text, data[1]).Show();
+                        informer.Text = "Открыто редактирование БД.";
                     } else {
+                        Process.Start(data[0]);
+                        informer.Text = "Пароль введен верно. Папка " + data[1] + " открыта.";
                         Application.Exit();
                     }
                 } catch (System.ComponentModel.Win32Exception) {
@@ -67,6 +68,7 @@ namespace folderKeySecure{
                 buttonAuthOpen.Visible = false;
                 showTimer.Tick -= showCheckButton;
                 hideTimer.Start();
+                this.TopMost = false;
             }
         }
 

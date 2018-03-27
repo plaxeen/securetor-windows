@@ -125,12 +125,12 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label informer;
         private System.Windows.Forms.Button buttonAuthOpen;
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.CheckBox checkBoxToEditDb;
         private System.Windows.Forms.Timer showTimer;
         private System.Windows.Forms.Timer hideTimer;
+        public System.Windows.Forms.Label informer;
     }
 }
 

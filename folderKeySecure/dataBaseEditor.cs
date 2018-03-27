@@ -8,15 +8,14 @@ namespace folderKeySecure {
     public partial class dataBaseEditor : Form {
 
         string[] database;
-        StreamWriter file;
 
-        public dataBaseEditor(string[] dataBaseFileText) {
+        public dataBaseEditor(string[] dataBaseFileText, string user) {
             InitializeComponent();
-
+            label1.Text = "Добро пожаловать в редактор БД, " + user + ".";
             database = dataBaseFileText;
-            file = new StreamWriter(util.pathApp + "base.ini", false);
-
             decodeDataBase(database);
+
+            new Core().Log("! " + user + " успешно открыл редактор БД.");
         }
 
         private void decodeDataBase(string[] database) {
@@ -33,6 +32,8 @@ namespace folderKeySecure {
         }
 
         private void saveDataBase_Click(object sender, EventArgs e) {
+            StreamWriter file = new StreamWriter(util.pathApp + "base.ini", false);
+            string log = "!!! БД была отредактирована.";
             for (int i = 0; i < dataGridView1.RowCount - 1; i++) {
                 string path = dataGridView1.Rows[i].Cells[0].Value.ToString();
                 string pass = dataGridView1.Rows[i].Cells[1].Value.ToString();
@@ -41,14 +42,14 @@ namespace folderKeySecure {
 
                 byte[] encoding = Encoding.UTF8.GetBytes(userLine);
                 string encodedLine = Convert.ToBase64String(encoding);
+                log += "\r\n\t" + encodedLine;
 
-                writer(encodedLine);
+                file.WriteLine(encodedLine);
             }
             file.Close();
-        }
-
-        private void writer(string ln) {
-            file.WriteLine(ln);
+            string done = "БД сохранена. Изменения будут зафиксированы в LOG файле. Ты не скроешься)";
+            new Core().Log(log);
+            label1.Text = done;
         }
     }
 }
