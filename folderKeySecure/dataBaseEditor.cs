@@ -15,7 +15,7 @@ namespace folderKeySecure {
             database = dataBaseFileText;
             decodeDataBase(database);
 
-            new Core().Log("! " + user + " успешно открыл редактор БД.");
+            new Core().Log("! " + user + " открыл редактор БД.");
         }
 
         private void decodeDataBase(string[] database) {

@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(dataBaseEditor));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.folderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.saveDataBase = new System.Windows.Forms.Button();
-            this.userGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.folderPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userGroup = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -57,21 +57,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(800, 450);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // folderPath
-            // 
-            this.folderPath.HeaderText = "ИМЯ ПАПКИ";
-            this.folderPath.Name = "folderPath";
-            // 
-            // password
-            // 
-            this.password.HeaderText = "ПАРОЛЬ";
-            this.password.Name = "password";
-            // 
-            // user
-            // 
-            this.user.HeaderText = "ПОЛЬЗОВАТЕЛЬ";
-            this.user.Name = "user";
             // 
             // panel1
             // 
@@ -105,10 +90,30 @@
             this.saveDataBase.UseVisualStyleBackColor = true;
             this.saveDataBase.Click += new System.EventHandler(this.saveDataBase_Click);
             // 
+            // folderPath
+            // 
+            this.folderPath.HeaderText = "ИМЯ ПАПКИ";
+            this.folderPath.Name = "folderPath";
+            // 
+            // password
+            // 
+            this.password.HeaderText = "ПАРОЛЬ";
+            this.password.Name = "password";
+            // 
+            // user
+            // 
+            this.user.HeaderText = "ПОЛЬЗОВАТЕЛЬ";
+            this.user.Name = "user";
+            // 
             // userGroup
             // 
-            this.userGroup.HeaderText = "ГРУППА ПОЛЬЗОВАТЕЛЯ";
+            this.userGroup.HeaderText = "ГРУППА ПРАВ ПОЛЬЗОВАТЕЛЯ";
+            this.userGroup.Items.AddRange(new object[] {
+            "admin",
+            "user"});
             this.userGroup.Name = "userGroup";
+            this.userGroup.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.userGroup.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // dataBaseEditor
             // 
@@ -130,12 +135,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn folderPath;
-        private System.Windows.Forms.DataGridViewTextBoxColumn password;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button saveDataBase;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn folderPath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user;
+        private System.Windows.Forms.DataGridViewComboBoxColumn userGroup;
     }
 }

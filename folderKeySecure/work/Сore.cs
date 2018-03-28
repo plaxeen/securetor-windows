@@ -64,8 +64,8 @@ namespace folderKeySecure.work{
                 // если вернувшийся адрес уже содержит полный путь -- его же и передаем
                 string path = (address[0]+address[1]).Equals(@"\\") ? address : util.path + address;
 
-                // вернуть массив из адреса с именем
-                return new string[] {path, req[1]};
+                // вернуть массив из адреса, имени и группы прав пользователя
+                return new string[] {path, req[1], req[2]};
             }
         }
 
