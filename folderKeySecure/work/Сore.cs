@@ -15,7 +15,7 @@ namespace folderKeySecure.work{
         public string[] Request(string[] database, string password){
             // идем построчно по базе
             for (int i = 0; database.Length > i; i++){
-                string folder_temp, password_temp, username_temp;
+                string folder_temp, password_temp, username_temp, usergroup_temp;
 
                 // расшифровываем базу
                 byte[] decoding = Convert.FromBase64String(database[i]);
@@ -26,13 +26,15 @@ namespace folderKeySecure.work{
                 folder_temp = data_array[0];
                 password_temp = data_array[1];
                 username_temp = data_array[2];
+                usergroup_temp = data_array[3];
+                
 
                 // сравниваем введеный пароль с паролем в базе на точное совпадение
-                if (password.Contains(password_temp)){
+                if (password.Equals(password_temp)){
                     // записываем в логи успешный аудит
                     Log(true, null, username_temp);
-                    // возвращаем массив из названия папки и имени в базе
-                    return new string[] {folder_temp, username_temp};
+                    // возвращаем массив из названия папки, имени в базе и группы прав
+                    return new string[] {folder_temp, username_temp, usergroup_temp};
                 }
             }
             // записываем в логи не успешный аудит
@@ -60,16 +62,10 @@ namespace folderKeySecure.work{
                 string address = req[0];
 
                 // если вернувшийся адрес уже содержит полный путь -- его же и передаем
-                string path = null;
-                if (address.Contains(@"\\"))
-                {
-                    path = address;
-                } else {
-                    // иначе составить полный дефолтный адрес сети
-                    path = util.path + address;
-                }
-                // вернуть массив из адреса с именем
-                return new string[] {path, req[1]};
+                string path = (address[0]+address[1]).Equals(@"\\") ? address : util.path + address;
+
+                // вернуть массив из адреса, имени и группы прав пользователя
+                return new string[] {path, req[1], req[2]};
             }
         }
 
@@ -89,15 +85,8 @@ namespace folderKeySecure.work{
 
             // получение часа и минут
             int hour = DateTime.Now.Hour, min = DateTime.Now.Minute;
-            string h, m;
-            h = Convert.ToString(hour);
-            m = Convert.ToString(min);
-            if (hour < 10){
-                h = "0" + hour;
-            }
-            if (min < 10){
-                m = "0" + min;
-            }
+            string h = hour < 10 ? "0" + hour : Convert.ToString(hour);
+            string m = min < 10 ? "0" + min : Convert.ToString(min);
             string clock = h + ":" + m;
 
             // получение даты
@@ -108,7 +97,7 @@ namespace folderKeySecure.work{
             if (audit){
                 auditInfo = "\r\n! Успешный аудит. \r\nПапка " + user + " открыта в " + date +
                     " " + clock + " \r\nКомпьютером: \"" + computerName + "\", версия программы: \"" + appVer + "\"";
-            }else{
+            } else {
                 // название учетной записи
                 user = WindowsIdentity.GetCurrent().Name.ToString();
                 auditInfo = "\r\n###\r\n! Не успешный аудит. " + date + " " + clock +
@@ -116,12 +105,7 @@ namespace folderKeySecure.work{
                     "\", пользователем: \"" + user + "\" версия программы: \"" + appVer + 
                     "\", \r\nТокен учетной записи Windows: \"" + token + "\"";
             }
-
-            // запись в файл
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(util.pathApp + "debug.txt", true)) {
-                file.WriteLine(auditInfo);
-            }
+            write(auditInfo);
         }
 
         /// <summary>
@@ -129,11 +113,14 @@ namespace folderKeySecure.work{
         /// </summary>
         /// <param name="message">сообщение</param>
         public void Log(string message){
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(util.pathApp + "debug.txt", true)){
-                file.WriteLine(message);
-            }
+            write(message);
         }
 
+        private void write(string m) {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(util.pathApp + "debug.txt", true)) {
+                file.WriteLine(m);
+            }
+        }
     }
 }
