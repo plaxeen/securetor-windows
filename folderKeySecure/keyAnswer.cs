@@ -21,10 +21,15 @@ namespace folderKeySecure{
             } catch (System.IO.IOException) {
                 // Если нажата OK -- программа закрывается
                 if (MessageBox.Show("Файл с базами данных паролей не найден на прежнем месте.",
-                    "Программа будет закрыта", MessageBoxButtons.OK) ==
-                    DialogResult.OK){
+                    "Программа будет закрыта", MessageBoxButtons.OK) == DialogResult.OK) {
                     Environment.Exit(1);
-                };
+                }
+            } catch (System.UnauthorizedAccessException) {
+                if (MessageBox.Show("К сожалению, доступ к папке запрещен системой. Авторизуйтесь " +
+                    "под учетной записью, где есть доступ к папке \"П3-15\".",
+                    "Программа будет закрыта", MessageBoxButtons.OK) == DialogResult.OK) {
+                    Environment.Exit(1);
+                }
             }
         }
 
@@ -52,16 +57,22 @@ namespace folderKeySecure{
                 informer.Text = "Ошибка: Пароль неверный. Повторите попытку.";
             } else {
                 try {
-                    if (checkBoxToEditDb.Checked) {
+                    if (data[2] == "admin" && checkBoxToEditDb.Checked) {
                         new dataBaseEditor(database_text, data[1]).Show();
                         informer.Text = "Открыто редактирование БД.";
+                    } else if (data[2] != "admin" && checkBoxToEditDb.Checked) {
+                        Process.Start(data[0]);
+                        informer.Text = "Пароль введен верно. Папка " + data[1] + " открыта.\r\n" +
+                            "Редактирование БД запрещено для пользователя с правами " + data[2] + "\r\n" + 
+                            "Причина: простой пароль или тестовая у/з.";
                     } else {
                         Process.Start(data[0]);
                         informer.Text = "Пароль введен верно. Папка " + data[1] + " открыта.";
                         Application.Exit();
                     }
                 } catch (System.ComponentModel.Win32Exception) {
-                    informer.Text = "Папка " + data[1] + " не найдена.\r\nОбратись к Игнатову Олегу за помощью с определением своей папки.";
+                    informer.Text = "Папка " + data[1] + " не найдена.\r\n" +
+                        "Обратись к Игнатову Олегу за помощью с определением своей папки.";
                     init.Log("\t! Не найдена папка " + data[0]);
                 }
                 pass.Visible = false;
@@ -69,6 +80,7 @@ namespace folderKeySecure{
                 showTimer.Tick -= showCheckButton;
                 hideTimer.Start();
                 this.TopMost = false;
+                checkBoxToEditDb.Visible = false;
             }
         }
 

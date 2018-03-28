@@ -28,6 +28,7 @@ namespace folderKeySecure {
                 dataGridView1.Rows[i].Cells[0].Value = data_array[0];
                 dataGridView1.Rows[i].Cells[1].Value = data_array[1];
                 dataGridView1.Rows[i].Cells[2].Value = data_array[2];
+                dataGridView1.Rows[i].Cells[3].Value = data_array[3];
             }
         }
 
@@ -38,7 +39,8 @@ namespace folderKeySecure {
                 string path = dataGridView1.Rows[i].Cells[0].Value.ToString();
                 string pass = dataGridView1.Rows[i].Cells[1].Value.ToString();
                 string name = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                string userLine = path + ":" + pass + ":" + name;
+                string group = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                string userLine = path + ":" + pass + ":" + name + ":" + group;
 
                 byte[] encoding = Encoding.UTF8.GetBytes(userLine);
                 string encodedLine = Convert.ToBase64String(encoding);

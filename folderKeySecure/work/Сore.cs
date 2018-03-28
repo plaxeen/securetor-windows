@@ -15,7 +15,7 @@ namespace folderKeySecure.work{
         public string[] Request(string[] database, string password){
             // идем построчно по базе
             for (int i = 0; database.Length > i; i++){
-                string folder_temp, password_temp, username_temp;
+                string folder_temp, password_temp, username_temp, usergroup_temp;
 
                 // расшифровываем базу
                 byte[] decoding = Convert.FromBase64String(database[i]);
@@ -26,13 +26,15 @@ namespace folderKeySecure.work{
                 folder_temp = data_array[0];
                 password_temp = data_array[1];
                 username_temp = data_array[2];
+                usergroup_temp = data_array[3];
+                
 
                 // сравниваем введеный пароль с паролем в базе на точное совпадение
                 if (password.Equals(password_temp)){
                     // записываем в логи успешный аудит
                     Log(true, null, username_temp);
-                    // возвращаем массив из названия папки и имени в базе
-                    return new string[] {folder_temp, username_temp};
+                    // возвращаем массив из названия папки, имени в базе и группы прав
+                    return new string[] {folder_temp, username_temp, usergroup_temp};
                 }
             }
             // записываем в логи не успешный аудит
